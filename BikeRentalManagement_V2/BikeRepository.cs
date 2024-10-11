@@ -21,7 +21,7 @@ namespace BikeRentalManagement_V2
             using(var connection = new SqlConnection(_connectionstring))
             {
                 connection.Open();
-                var cmd = new SqlCommand("insert into Bikes(BikeId,Brand,Model,RentalPrice)values(@id,@brand,@model,@price",connection);
+                var cmd = new SqlCommand("insert into Bikes(BikeId,Brand,Model,RentalPrice)values(@id,@brand,@model,@price)",connection);
                 cmd.Parameters.AddWithValue("@id",bike.BikeId);
                 cmd.Parameters.AddWithValue("@brand", bike.Brand);
                 cmd.Parameters.AddWithValue("@model", bike.Model);
@@ -48,7 +48,7 @@ namespace BikeRentalManagement_V2
                 {
                     while (reader.Read())
                     {
-                        Console.WriteLine(reader.GetString(0));
+                        Console.WriteLine($"ID:{reader["BikeId"]} Brand:{reader["Brand"]} Model:{reader["Model"]} RentalPrice:{reader["RentalPrice"]}");
                     }
                 }
             }
@@ -59,7 +59,7 @@ namespace BikeRentalManagement_V2
             using( var connection = new SqlConnection(_connectionstring))
             {
                 connection.Open();
-                var cmd = new SqlCommand("update set Bikes Brand=@brand,Model=@model,RentalPrice=@price where BikeId = @id", connection);
+                var cmd = new SqlCommand("update Bikes set  Brand=@brand,Model=@model,RentalPrice=@price where BikeId = @id", connection);
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@brand", newBrand);
                 cmd.Parameters.AddWithValue("@model", newModel);
