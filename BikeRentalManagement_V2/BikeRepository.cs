@@ -23,7 +23,7 @@ namespace BikeRentalManagement_V2
                 connection.Open();
                 var cmd = new SqlCommand("insert into Bikes(BikeId,Brand,Model,RentalPrice)values(@id,@brand,@model,@price)",connection);
                 cmd.Parameters.AddWithValue("@id",bike.BikeId);
-                cmd.Parameters.AddWithValue("@brand", bike.Brand);
+                cmd.Parameters.AddWithValue("@brand", CapitalizeBrand (bike.Brand));
                 cmd.Parameters.AddWithValue("@model", bike.Model);
                 cmd.Parameters.AddWithValue("@price", bike.RentalPrice);
                 try
@@ -61,7 +61,7 @@ namespace BikeRentalManagement_V2
                 connection.Open();
                 var cmd = new SqlCommand("update Bikes set  Brand=@brand,Model=@model,RentalPrice=@price where BikeId = @id", connection);
                 cmd.Parameters.AddWithValue("@id", id);
-                cmd.Parameters.AddWithValue("@brand", newBrand);
+                cmd.Parameters.AddWithValue("@brand", CapitalizeBrand (newBrand));
                 cmd.Parameters.AddWithValue("@model", newModel);
                 cmd.Parameters.AddWithValue("@price", newPrice);
 
@@ -95,6 +95,10 @@ namespace BikeRentalManagement_V2
                     Console.WriteLine(ex.Message);
                 }
             }
+        }
+        public string CapitalizeBrand(string brand)
+        {
+            return System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(brand.ToLower());
         }
     }
 }
